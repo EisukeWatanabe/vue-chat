@@ -2,13 +2,20 @@
   <v-app>
     <div class="login-box">
       <v-card class="login-form">
-        <v-card-title class="login-title">login</v-card-title>
+        <v-card-title class="login-title">SignUp</v-card-title>
         <v-card-subtitle>ユーザー情報をご入力ください</v-card-subtitle>
-        <v-btn text color="light-blue" to="signup">新規登録はこちら</v-btn>
+        <v-btn text color="light-blue" to="login">ログイン画面はこちら</v-btn>
         <v-form
             ref="form"
             v-model="valid"
             lazy-validation>
+
+          <v-text-field
+              v-model="name"
+              :rules="nameRules"
+              label="UserName"
+              required>
+          </v-text-field>
 
           <v-text-field
               v-model="email"
@@ -24,7 +31,7 @@
 
           </v-text-field>
 
-          <v-btn color="success" class="login-btn" :disabled="isValid">LOGIN</v-btn>
+          <v-btn color="success" class="login-btn" :disabled="isValid">SIGN UP</v-btn>
           <v-btn>CLEAR</v-btn>
         </v-form>
       </v-card>
@@ -38,8 +45,8 @@ export default {
     valid: true,
     name: '',
     nameRules: [
-      v => !!v || 'Name is required',
-      v => (v && v.length <= 10) || 'Name must be less than 10 characters',
+      v => !!v || '名前を入力してください',
+      v => (v && v.length <= 10) || '名前は10文字以内で入力してください',
     ],
     email: '',
     emailRules: [
