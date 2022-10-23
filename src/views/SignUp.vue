@@ -31,7 +31,7 @@
 
           </v-text-field>
 
-          <v-btn color="success" class="login-btn" :disabled="isValid">SIGN UP</v-btn>
+          <v-btn color="success" class="login-btn" :disabled="isValid" @click="submit">SIGN UP</v-btn>
           <v-btn>CLEAR</v-btn>
         </v-form>
       </v-card>
@@ -40,6 +40,8 @@
 </template>
 
 <script>
+import firebase from "@/firebase/firebase"
+
 export default {
   data: () => ({
     valid: true,
@@ -72,6 +74,19 @@ export default {
     resetValidation () {
       this.$refs.form.resetValidation()
     },
+    submit() {
+      console.log("submit coat");
+      firebase.auth().createUserWithEmailAndPassword(this.email, this.password)
+      .then(async (result) => {
+        console.log("success", result)
+        await result.user.updateProfile(
+            {displayName: this.name}
+        )
+      })
+      .catch((error) => {
+        console.log("fail", error)
+      })
+    }
   },
 }
 </script>
