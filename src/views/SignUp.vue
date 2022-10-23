@@ -33,6 +33,15 @@
 
           <v-btn color="success" class="login-btn" :disabled="isValid" @click="submit">SIGN UP</v-btn>
           <v-btn>CLEAR</v-btn>
+
+          <v-alert
+              v-if="errorMessage"
+              class="error-message"
+              dense
+              outlined
+              type="error">
+            {{ errorMessage }}
+          </v-alert>
         </v-form>
       </v-card>
     </div>
@@ -57,10 +66,10 @@ export default {
     ],
     password: '',
     select: null,
+    errorMessage: ""
   }),
   computed: {
     isValid() {
-      console.log("isValid", this.valid);
       return !this.valid;
     }
   },
@@ -75,16 +84,18 @@ export default {
       this.$refs.form.resetValidation()
     },
     submit() {
-      console.log("submit coat");
       firebase.auth().createUserWithEmailAndPassword(this.email, this.password)
       .then(async (result) => {
         console.log("success", result)
         await result.user.updateProfile(
             {displayName: this.name}
-        )
+        );
+        this.$router.push('/login')
+
       })
       .catch((error) => {
         console.log("fail", error)
+        this.errorMessage = "ユーザーの新規作成に失敗しました。"
       })
     }
   },
@@ -109,5 +120,9 @@ export default {
 
 .login-btn {
   margin-right: 20px;
+}
+
+.error-message {
+  margin-top: 20px;
 }
 </style>
