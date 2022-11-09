@@ -26,6 +26,14 @@
 
           <v-btn color="success" class="login-btn" :disabled="isValid">LOGIN</v-btn>
           <v-btn>CLEAR</v-btn>
+          <v-alert
+              v-if="message"
+              dense
+              text
+              type="success"
+              class="success-message">
+            {{ message }}
+          </v-alert>
         </v-form>
       </v-card>
     </div>
@@ -48,7 +56,14 @@ export default {
     ],
     password: '',
     select: null,
+    message: ''
   }),
+  mounted() {
+    if (localStorage.message) {
+      this.message = localStorage.message
+      localStorage.message = ''
+    }
+  },
   computed: {
     isValid() {
       console.log("isValid", this.valid);
@@ -87,5 +102,9 @@ export default {
 
 .login-btn {
   margin-right: 20px;
+}
+
+.success-message {
+  margin-top: 20px;
 }
 </style>

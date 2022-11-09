@@ -90,6 +90,9 @@ export default {
         await result.user.updateProfile(
             {displayName: this.name}
         );
+
+        localStorage.message = "新規作成に成功しました"
+
         this.$router.push('/login')
 
       })
