@@ -24,7 +24,13 @@
 
           </v-text-field>
 
-          <v-btn color="success" class="login-btn" :disabled="isValid">LOGIN</v-btn>
+          <v-btn
+              color="success"
+              class="login-btn"
+              :disabled="isValid"
+              @click="submit">
+            LOGIN
+          </v-btn>
           <v-btn>CLEAR</v-btn>
           <v-alert
               v-if="message"
@@ -80,6 +86,9 @@ export default {
     resetValidation () {
       this.$refs.form.resetValidation()
     },
+    submit() {
+      console.log("submit call")
+    }
   },
 }
 </script>
